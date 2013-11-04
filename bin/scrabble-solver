@@ -53,6 +53,12 @@ OptionParser.new do |o|
        'The word file to use. Defaults to a preset list of words.' do |file|
     options[:word_file] = file
   end
+  
+  o.on '--wide', '-w', 
+    'Display output by number of letters in a single line' do |wide|
+      options[:wide] = true
+  end
+    
 end.parse!
 
 # Pull the tiles from the first argument.
@@ -67,6 +73,11 @@ end
 # If all is well, solve :)
 words = Scrabble::Solver.words_for(letters, options).sort do |word1, word2|
   word1.length <=> word2.length
+end
+
+# Section out list of words by letter count and single lines
+if options[:wide]
+  words = words.join(' ')
 end
 
 puts words

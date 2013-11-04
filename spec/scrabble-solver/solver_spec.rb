@@ -217,6 +217,11 @@ module Scrabble
         words = `#{executable} ???? --word-file #{test_word_file}`.split(/\n/)
         words.should be_empty
       end
+      
+      it "should provide a wide listing if specified" do
+        words = `#{executable} alphabets --wide`
+        words.lines.count.should be == 1, "Incorrect display distribution."
+      end
     end
   end
 end
